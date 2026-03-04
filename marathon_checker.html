@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Marathon – Inventory Value Checker</title>
+  <style>
+    :root {
+      --bg: #0d0f14;
+      --surface: #161b24;
+      --card: #1e2533;
+      --border: #2a3347;
+      --accent: #e8580c;
+      --accent2: #ff7c3e;
+      --green: #2ecc71;
+      --red: #e74c3c;
+      --yellow: #f39c12;
+      --text: #e8eaf0;
+      --muted: #7a8299;
+      --font: 'Segoe UI', system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 16px;
+    }
+
+    header { text-align: center; margin-bottom: 36px; }
+    header .logo {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-shadow: 0 0 20px rgba(232,88,12,0.4);
+    }
+    header .subtitle {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 6px;
+      letter-spacing: 1px;
+    }
+
+    .api-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      margin-top: 12px;
+      color: var(--yellow);
+    }
+    .api-status .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--yellow);
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
+    .api-status.live { color: var(--green); }
+    .api-status.live .dot { background: var(--green); }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      width: 100%;
+      max-width: 520px;
+      margin-bottom: 20px;
+    }
+    .card h2 {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .field { margin-bottom: 20px; }
+    label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-size: 1rem;
+      font-family: var(--font);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    input:focus { border-color: var(--accent); }
+    input::placeholder { color: var(--muted); }
+
+    button {
+      width: 100%;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 8px;
+    }
+    button:hover { background: var(--accent2); }
+    button:active { transform: scale(0.98); }
+    button:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; transform: none; }
+
+    .loader {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding: 20px 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .loader.active { display: flex; }
+    .spinner {
+      width: 20px; height: 20px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .result {
+      display: none;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+      border: 1px solid var(--border);
+    }
+    .result.show { display: block; }
+    .result.success { border-color: var(--green); background: rgba(46,204,113,0.06); }
+    .result.failure { border-color: var(--red); background: rgba(231,76,60,0.06); }
+    .result.error   { border-color: var(--yellow); background: rgba(243,156,18,0.06); }
+
+    .result-icon { font-size: 2rem; margin-bottom: 10px; }
+    .result-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+    .result.success .result-title { color: var(--green); }
+    .result.failure .result-title { color: var(--red); }
+    .result.error   .result-title { color: var(--yellow); }
+    .result-detail { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+    .result-detail span { color: var(--text); font-weight: 600; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .stat-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+    }
+    .stat-box .stat-val { font-size: 1.3rem; font-weight: 800; color: var(--accent); }
+    .stat-box .stat-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+    .info-banner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--yellow);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.6;
+      width: 100%;
+      max-width: 520px;
+      margin-bottom: 20px;
+    }
+    .info-banner strong { color: var(--yellow); }
+
+    /* FOOTER */
+    footer {
+      color: var(--muted);
+      font-size: 0.75rem;
+      text-align: center;
+      margin-top: 20px;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    .footer-creator {
+      display: flex;
+      justify-content: center;
+      margin-top: 12px;
+    }
+    .creator-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      text-decoration: none;
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.02);
+      font-size: 0.85rem;
+      transition: border-color 0.2s;
+    }
+    .creator-link:hover { border-color: var(--accent); }
+    .creator-avatar {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--border);
+    }
+
+    /* WARLEGEND */
+    .wls-block {
+      width: 100%;
+      max-width: 520px;
+      display: flex;
+      justify-content: center;
+      margin-top: 12px;
+      margin-bottom: 32px;
+    }
+    .wls-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 18px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: border-color 0.2s;
+    }
+    .wls-link:hover { border-color: var(--accent); }
+    .wls-logo { height: 22px; width: auto; display: block; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">&#9670; Marathon</div>
+    <div class="subtitle">Inventory Value Checker — Tournament Tool</div>
+    <div class="api-status" id="apiStatusBadge">
+      <span class="dot"></span>
+      <span id="apiStatusText">API officielle non disponible – mode simulation</span>
+    </div>
+  </header>
+
+  <div class="info-banner" id="apiBanner">
+    <strong>⚠ API en attente</strong> — L'API officielle Bungie pour Marathon n'est pas encore disponible.
+    Le checker fonctionne en <strong>mode simulation</strong> pour l'instant.
+    Dès que l'API sera live, ce tool sera mis à jour automatiquement.
+  </div>
+
+  <div class="card">
+    <h2>Vérifier un joueur</h2>
+
+    <div class="field">
+      <label>Pseudo du joueur</label>
+      <input type="text" id="inputPseudo" placeholder="Ex: Runner#1234" autocomplete="off" />
+    </div>
+
+    <div class="field">
+      <label>Inventory Value déclarée (crédits)</label>
+      <input type="number" id="inputExpected" placeholder="Ex: 42000" min="0" />
+    </div>
+
+    <button id="btnVerify" onclick="verifyPlayer()">Vérifier</button>
+
+    <div class="loader" id="loader">
+      <div class="spinner"></div>
+      Récupération des données joueur…
+    </div>
+
+    <div class="result" id="resultBox">
+      <div class="result-icon" id="resultIcon"></div>
+      <div class="result-title" id="resultTitle"></div>
+      <div class="result-detail" id="resultDetail"></div>
+      <div class="stats-grid" id="statsGrid" style="display:none"></div>
+    </div>
+  </div>
+
+  <footer>
+    <div>
+      Outil non officiel — données via
+      <a href="https://www.bungie.net/platform" target="_blank" rel="noopener">Bungie API</a>
+      dès disponibilité ·
+      <a href="https://github.com/Bungie-net/api" target="_blank" rel="noopener">Bungie-net/api</a>
+    </div>
+    <div class="footer-creator">
+      <a class="creator-link" href="https://x.com/clemclx" target="_blank" rel="noopener">
+        <img class="creator-avatar"
+             src="https://unavatar.io/twitter/clemclx"
+             alt="Clem"
+             onerror="this.src='https://ui-avatars.com/api/?name=Clem&background=e8580c&color=fff&size=28'">
+        <span>Créé par Clem</span>
+      </a>
+    </div>
+  </footer>
+
+  <div class="wls-block">
+    <a class="wls-link" href="https://www.wls.gg/" target="_blank" rel="noopener">
+      <span>Organisé par</span>
+      <img class="wls-logo"
+           src="https://www.wls.gg/_nuxt/img/wls_flat.5b37b20.png"
+           alt="WarLegend">
+    </a>
+  </div>
+
+<script>
+// ============================================================
+//  CONFIG — Mettre à jour dès que l'API Marathon est disponible
+// ============================================================
+const CONFIG = {
+  API_LIVE: false,
+  BUNGIE_API_KEY: "f016eaec6d5b4df480003e5ebdfbf6d0",
+  BASE_URL: "https://www.bungie.net/Platform",
+};
+
+async function verifyPlayer() {
+  const pseudo   = document.getElementById("inputPseudo").value.trim();
+  const expected = parseInt(document.getElementById("inputExpected").value);
+
+  if (!pseudo)          return showError("Saisis un pseudo.");
+  if (isNaN(expected))  return showError("Saisis une Inventory Value valide.");
+
+  setLoading(true);
+  try {
+    const data = CONFIG.API_LIVE
+      ? await fetchRealData(pseudo, expected)
+      : await simulateData(pseudo, expected);
+    displayResult(data);
+  } catch (err) {
+    showError("Erreur : " + err.message);
+  } finally {
+    setLoading(false);
+  }
+}
+
+// ============================================================
+//  MODE RÉEL — membershipType = -1 (toutes plateformes)
+// ============================================================
+async function fetchRealData(pseudo, expected) {
+  const headers = { "X-API-Key": CONFIG.BUNGIE_API_KEY };
+
+  // 1. Résoudre le pseudo → membershipId (toutes plateformes via -1)
+  const searchRes = await fetch(
+    `${CONFIG.BASE_URL}/Destiny2/SearchDestinyPlayer/-1/${encodeURIComponent(pseudo)}/`,
+    { headers }
+  );
+  const searchJson = await searchRes.json();
+  if (!searchJson.Response?.length) throw new Error("Joueur introuvable.");
+
+  const { membershipId, membershipType } = searchJson.Response[0];
+
+  // 2. Récupérer profil + inventaire (components 100 + 201)
+  const profileRes = await fetch(
+    `${CONFIG.BASE_URL}/Destiny2/Profile/${membershipId}/?components=100,201`,
+    { headers }
+  );
+  const profileJson = await profileRes.json();
+
+  // 3. Calculer la valeur totale
+  const actualValue = computeInventoryValue(profileJson.Response);
+
+  return {
+    pseudo, membershipId,
+    actualValue,
+    expectedValue: expected,
+    match: Math.abs(actualValue - expected) <= 500,
+    lastUpdate: new Date().toLocaleString("fr-FR"),
+  };
+}
+
+// TODO: à compléter avec la structure JSON Marathon une fois la doc disponible
+function computeInventoryValue(profileData) {
+  return 0;
+}
+
+// ============================================================
+//  MODE SIMULATION
+// ============================================================
+async function simulateData(pseudo, expected) {
+  await new Promise(r => setTimeout(r, 1400));
+  const variance = Math.floor((Math.random() - 0.5) * 8000);
+  return {
+    pseudo,
+    membershipId: "SIM-" + Math.random().toString(36).substr(2,8).toUpperCase(),
+    actualValue: expected + variance,
+    expectedValue: expected,
+    match: Math.abs(variance) <= 500,
+    simulated: true,
+    lastUpdate: new Date().toLocaleString("fr-FR"),
+  };
+}
+
+// ============================================================
+//  AFFICHAGE
+// ============================================================
+function displayResult(data) {
+  const box    = document.getElementById("resultBox");
+  const grid   = document.getElementById("statsGrid");
+  const diff   = data.actualValue - data.expectedValue;
+  const diffStr = (diff >= 0 ? "+" : "") + diff.toLocaleString("fr-FR") + " cr";
+
+  box.className = "result show " + (data.match ? "success" : "failure");
+  document.getElementById("resultIcon").textContent  = data.match ? "✅" : "❌";
+  document.getElementById("resultTitle").textContent = data.match
+    ? "Inventory Value vérifiée ✔"
+    : "Valeur non conforme ✗";
+  document.getElementById("resultDetail").innerHTML = `
+    Joueur : <span>${data.pseudo}</span><br>
+    ID : <span>${data.membershipId}</span><br>
+    ${data.simulated ? "<em style='color:var(--yellow)'>⚠ Données simulées — API non disponible</em><br>" : ""}
+    Écart : <span>${diffStr}</span> · Vérifié le <span>${data.lastUpdate}</span>
+  `;
+
+  grid.style.display = "grid";
+  grid.innerHTML = `
+    <div class="stat-box">
+      <div class="stat-val">${data.expectedValue.toLocaleString("fr-FR")}</div>
+      <div class="stat-label">Valeur déclarée</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val" style="color:${data.match ? 'var(--green)' : 'var(--red)'}">
+        ${data.actualValue.toLocaleString("fr-FR")}
+      </div>
+      <div class="stat-label">Valeur réelle</div>
+    </div>
+  `;
+}
+
+function showError(msg) {
+  const box = document.getElementById("resultBox");
+  box.className = "result show error";
+  document.getElementById("resultIcon").textContent  = "⚠️";
+  document.getElementById("resultTitle").textContent = "Erreur";
+  document.getElementById("resultDetail").innerHTML  = msg;
+  document.getElementById("statsGrid").style.display = "none";
+}
+
+function setLoading(state) {
+  document.getElementById("loader").className = state ? "loader active" : "loader";
+  document.getElementById("btnVerify").disabled = state;
+  if (state) document.getElementById("resultBox").className = "result";
+}
+
+// Badge API
+if (CONFIG.API_LIVE) {
+  document.getElementById("apiStatusBadge").classList.add("live");
+  document.getElementById("apiStatusText").textContent = "API Bungie Marathon connectée";
+  document.getElementById("apiBanner").style.display = "none";
+}
+</script>
+</body>
+</html>
