@@ -334,8 +334,8 @@
   <div id="loginScreen">
     <div class="login-logo">&#9670; MARATHON</div>
     <div class="login-sub">Accès réservé aux organisateurs</div>
-    <input class="login-input" type="text"     id="loginUser" placeholder="Identifiant"   autocomplete="off" onkeydown="if(event.key==='Enter') checkLogin()" />
-    <input class="login-input" type="password" id="loginPass" placeholder="Mot de passe"  autocomplete="off" onkeydown="if(event.key==='Enter') checkLogin()" />
+    <input class="login-input" type="text"     id="loginUser" placeholder="Identifiant"  autocomplete="off" onkeydown="if(event.key==='Enter') checkLogin()" />
+    <input class="login-input" type="password" id="loginPass" placeholder="Mot de passe" autocomplete="off" onkeydown="if(event.key==='Enter') checkLogin()" />
     <button class="login-btn" onclick="checkLogin()">Accéder</button>
     <div id="loginError">❌ Identifiant ou mot de passe incorrect</div>
   </div>
@@ -415,12 +415,22 @@
 
 <script>
   // ════════════════════════════════
-  //  CONNEXION
+  //  CONNEXION AVEC HASH SHA-256
   // ════════════════════════════════
-  function checkLogin() {
+  async function checkLogin() {
     const user = document.getElementById("loginUser").value.trim();
     const pass = document.getElementById("loginPass").value;
-    if (user === "staff" && pass === "D9X@WtMCJc") {
+
+    const encoder = new TextEncoder();
+    const data = encoder.encode(pass);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+
+    const VALID_USER = "staff";
+    const VALID_HASH = "a7fc444f5b658e19d6a6094c360db22c25929cc016b4cc74b372ef411b5e5fc6";
+
+    if (user === VALID_USER && hashHex === VALID_HASH) {
       document.getElementById("loginScreen").style.display = "none";
     } else {
       document.getElementById("loginError").style.display = "block";
@@ -433,7 +443,7 @@
   // ════════════════════════════════
   const CONFIG = {
     API_LIVE: false,
-    BUNGIE_API_KEY: "f016eaec6d5b4df480003e5ebdfbf6d0",
+    BUNGIE_API_KEY: "VOTRE_CLE_API_ICI",
     BASE_URL: "https://www.bungie.net/Platform",
   };
 
@@ -571,4 +581,3 @@
 </script>
 </body>
 </html>
-
