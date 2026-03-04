@@ -31,102 +31,61 @@
       padding: 40px 16px;
     }
 
-    /* ── LOGIN SCREEN ── */
+    /* ── LOGIN ── */
     #loginScreen {
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       background: var(--bg);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      gap: 14px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      z-index: 9999; gap: 14px;
     }
-    #loginScreen .login-logo {
-      font-size: 1.8rem;
-      font-weight: 800;
-      letter-spacing: 4px;
-      color: var(--accent);
+    .login-logo {
+      font-size: 1.8rem; font-weight: 800;
+      letter-spacing: 4px; color: var(--accent);
       text-shadow: 0 0 20px rgba(232,88,12,0.4);
       margin-bottom: 4px;
     }
-    #loginScreen .login-sub {
-      color: var(--muted);
-      font-size: 0.8rem;
-      letter-spacing: 1px;
-      margin-bottom: 12px;
+    .login-sub {
+      color: var(--muted); font-size: 0.8rem;
+      letter-spacing: 1px; margin-bottom: 12px;
     }
     .login-input {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 16px;
-      color: var(--text);
-      font-size: 1rem;
-      font-family: var(--font);
-      outline: none;
-      width: 300px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 16px;
+      color: var(--text); font-size: 1rem;
+      font-family: var(--font); outline: none; width: 300px;
       transition: border-color 0.2s;
     }
     .login-input:focus { border-color: var(--accent); }
     .login-input::placeholder { color: var(--muted); }
     .login-btn {
-      width: 300px;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      padding: 13px;
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background 0.2s;
-      margin-top: 4px;
+      width: 300px; background: var(--accent); color: #fff;
+      border: none; border-radius: 10px; padding: 13px;
+      font-size: 1rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; cursor: pointer;
+      transition: background 0.2s; margin-top: 4px;
     }
     .login-btn:hover { background: var(--accent2); }
-    #loginError {
-      color: var(--red);
-      font-size: 0.8rem;
-      display: none;
-    }
+    #loginError { color: var(--red); font-size: 0.8rem; display: none; }
 
     /* ── HEADER ── */
     header { text-align: center; margin-bottom: 36px; }
-    header .logo {
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--accent);
+    .logo {
+      font-size: 2rem; font-weight: 800; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent);
       text-shadow: 0 0 20px rgba(232,88,12,0.4);
     }
-    header .subtitle {
-      color: var(--muted);
-      font-size: 0.85rem;
-      margin-top: 6px;
-      letter-spacing: 1px;
-    }
+    .subtitle { color: var(--muted); font-size: 0.85rem; margin-top: 6px; letter-spacing: 1px; }
 
     .api-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 6px 14px;
-      font-size: 0.78rem;
-      margin-top: 12px;
-      color: var(--yellow);
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; padding: 6px 14px;
+      font-size: 0.78rem; margin-top: 12px; color: var(--yellow);
     }
     .api-status .dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--yellow);
-      animation: pulse 1.8s infinite;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--yellow); animation: pulse 1.8s infinite;
     }
     @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
     .api-status.live { color: var(--green); }
@@ -134,91 +93,59 @@
 
     /* ── CARD ── */
     .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px;
-      width: 100%;
-      max-width: 520px;
-      margin-bottom: 20px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 32px;
+      width: 100%; max-width: 520px; margin-bottom: 20px;
     }
     .card h2 {
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--muted);
-      margin-bottom: 24px;
+      font-size: 1rem; text-transform: uppercase;
+      letter-spacing: 2px; color: var(--muted); margin-bottom: 24px;
     }
-
     .field { margin-bottom: 20px; }
     label {
-      display: block;
-      font-size: 0.8rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
+      display: block; font-size: 0.8rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
     }
     input[type="text"], input[type="number"] {
-      width: 100%;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 16px;
-      color: var(--text);
-      font-size: 1rem;
-      font-family: var(--font);
-      transition: border-color 0.2s;
-      outline: none;
+      width: 100%; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 12px 16px; color: var(--text); font-size: 1rem;
+      font-family: var(--font); transition: border-color 0.2s; outline: none;
     }
-    input[type="text"]:focus,
-    input[type="number"]:focus { border-color: var(--accent); }
+    input[type="text"]:focus, input[type="number"]:focus { border-color: var(--accent); }
     input::placeholder { color: var(--muted); }
 
     button#btnVerify {
-      width: 100%;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      padding: 14px;
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-      margin-top: 8px;
+      width: 100%; background: var(--accent); color: #fff;
+      border: none; border-radius: 10px; padding: 14px;
+      font-size: 1rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; cursor: pointer;
+      transition: background 0.2s, transform 0.1s; margin-top: 8px;
     }
     button#btnVerify:hover { background: var(--accent2); }
     button#btnVerify:active { transform: scale(0.98); }
     button#btnVerify:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; transform: none; }
 
+    /* ── LOADER ── */
     .loader {
-      display: none;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      padding: 20px 0;
-      color: var(--muted);
-      font-size: 0.9rem;
+      display: none; flex-direction: column;
+      align-items: center; gap: 10px;
+      padding: 24px 0; color: var(--muted); font-size: 0.85rem;
     }
     .loader.active { display: flex; }
     .spinner {
-      width: 20px; height: 20px;
+      width: 24px; height: 24px;
       border: 2px solid var(--border);
       border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
+      border-radius: 50%; animation: spin 0.7s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+    #loaderStep { color: var(--accent); font-size: 0.8rem; }
 
+    /* ── RESULT ── */
     .result {
-      display: none;
-      border-radius: 12px;
-      padding: 20px;
-      margin-top: 20px;
-      border: 1px solid var(--border);
+      display: none; border-radius: 12px; padding: 20px;
+      margin-top: 20px; border: 1px solid var(--border);
     }
     .result.show { display: block; }
     .result.success { border-color: var(--green); background: rgba(46,204,113,0.06); }
@@ -230,97 +157,84 @@
     .result.success .result-title { color: var(--green); }
     .result.failure .result-title { color: var(--red); }
     .result.error   .result-title { color: var(--yellow); }
-    .result-detail { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+    .result-detail { font-size: 0.85rem; color: var(--muted); line-height: 1.8; }
     .result-detail span { color: var(--text); font-weight: 600; }
 
+    /* ── RUNS LIST ── */
+    .runs-list {
+      margin-top: 16px; display: none;
+      flex-direction: column; gap: 8px;
+    }
+    .runs-list.show { display: flex; }
+    .runs-list-title {
+      font-size: 0.75rem; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--muted); margin-bottom: 4px;
+    }
+    .run-item {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px 14px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.82rem;
+    }
+    .run-item.match { border-color: var(--green); background: rgba(46,204,113,0.05); }
+    .run-item .run-date { color: var(--muted); }
+    .run-item .run-val { font-weight: 700; color: var(--text); }
+    .run-item.match .run-val { color: var(--green); }
+    .run-badge {
+      font-size: 0.7rem; padding: 2px 8px; border-radius: 999px;
+      background: rgba(46,204,113,0.15); color: var(--green);
+      border: 1px solid var(--green);
+    }
+
     .stats-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 16px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin-top: 16px;
     }
     .stat-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px;
-      text-align: center;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px; text-align: center;
     }
     .stat-box .stat-val { font-size: 1.3rem; font-weight: 800; color: var(--accent); }
     .stat-box .stat-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
 
+    /* ── BANNER ── */
     .info-banner {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--yellow);
-      border-radius: 10px;
-      padding: 14px 16px;
-      font-size: 0.8rem;
-      color: var(--muted);
-      line-height: 1.6;
-      width: 100%;
-      max-width: 520px;
-      margin-bottom: 20px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 3px solid var(--yellow); border-radius: 10px;
+      padding: 14px 16px; font-size: 0.8rem; color: var(--muted);
+      line-height: 1.6; width: 100%; max-width: 520px; margin-bottom: 20px;
     }
     .info-banner strong { color: var(--yellow); }
 
     /* ── FOOTER ── */
-    footer {
-      color: var(--muted);
-      font-size: 0.75rem;
-      text-align: center;
-      margin-top: 20px;
-    }
+    footer { color: var(--muted); font-size: 0.75rem; text-align: center; margin-top: 20px; }
     footer a { color: var(--accent); text-decoration: none; }
-
-    .footer-creator {
-      display: flex;
-      justify-content: center;
-      margin-top: 12px;
-    }
+    .footer-creator { display: flex; justify-content: center; margin-top: 12px; }
     .creator-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--text);
-      text-decoration: none;
-      padding: 8px 14px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: rgba(255,255,255,0.02);
-      font-size: 0.85rem;
+      display: inline-flex; align-items: center; gap: 10px;
+      color: var(--text); text-decoration: none; padding: 8px 14px;
+      border: 1px solid var(--border); border-radius: 999px;
+      background: rgba(255,255,255,0.02); font-size: 0.85rem;
       transition: border-color 0.2s;
     }
     .creator-link:hover { border-color: var(--accent); }
     .creator-avatar {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1px solid var(--border);
+      width: 28px; height: 28px; border-radius: 50%;
+      object-fit: cover; border: 1px solid var(--border);
     }
 
-    /* ── ORGA BLOCK ── */
+    /* ── ORGA ── */
     .wls-block {
-      width: 100%;
-      max-width: 520px;
-      display: flex;
-      justify-content: center;
-      margin-top: 12px;
-      margin-bottom: 32px;
+      width: 100%; max-width: 520px;
+      display: flex; justify-content: center;
+      margin-top: 12px; margin-bottom: 32px;
     }
     .wls-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 18px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--surface);
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      display: inline-flex; align-items: center; gap: 12px;
+      padding: 10px 18px; border: 1px solid var(--border);
+      border-radius: 12px; background: var(--surface);
+      color: var(--muted); text-decoration: none;
+      font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px;
     }
     .wls-logo { height: 22px; width: auto; display: block; }
     .wls-separator { color: var(--muted); font-size: 1rem; margin: 0 2px; }
@@ -328,9 +242,7 @@
 </head>
 <body>
 
-  <!-- ════════════════════════════════
-       ÉCRAN DE CONNEXION
-  ════════════════════════════════ -->
+  <!-- ══ LOGIN ══ -->
   <div id="loginScreen">
     <div class="login-logo">&#9670; MARATHON</div>
     <div class="login-sub">Accès réservé aux organisateurs</div>
@@ -340,9 +252,7 @@
     <div id="loginError">❌ Identifiant ou mot de passe incorrect</div>
   </div>
 
-  <!-- ════════════════════════════════
-       CONTENU PRINCIPAL
-  ════════════════════════════════ -->
+  <!-- ══ MAIN ══ -->
   <header>
     <div class="logo">&#9670; Marathon</div>
     <div class="subtitle">Inventory Value Checker — Tournament Tool</div>
@@ -375,7 +285,8 @@
 
     <div class="loader" id="loader">
       <div class="spinner"></div>
-      Récupération des données joueur…
+      <div>Analyse des runs des 48 dernières heures…</div>
+      <div id="loaderStep"></div>
     </div>
 
     <div class="result" id="resultBox">
@@ -383,6 +294,9 @@
       <div class="result-title" id="resultTitle"></div>
       <div class="result-detail" id="resultDetail"></div>
       <div class="stats-grid" id="statsGrid" style="display:none"></div>
+      <div class="runs-list" id="runsList">
+        <div class="runs-list-title">Runs analysées (48h)</div>
+      </div>
     </div>
   </div>
 
@@ -414,23 +328,17 @@
   </div>
 
 <script>
-  // ════════════════════════════════
-  //  CONNEXION AVEC HASH SHA-256
-  // ════════════════════════════════
+  // ══════════════════════════════════════
+  //  LOGIN — SHA-256
+  // ══════════════════════════════════════
   async function checkLogin() {
     const user = document.getElementById("loginUser").value.trim();
     const pass = document.getElementById("loginPass").value;
-
     const encoder = new TextEncoder();
-    const data = encoder.encode(pass);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-
-    const VALID_USER = "staff";
-    const VALID_HASH = "a7fc444f5b658e19d6a6094c360db22c25929cc016b4cc74b372ef411b5e5fc6";
-
-    if (user === VALID_USER && hashHex === VALID_HASH) {
+    const hashBuffer = await crypto.subtle.digest("SHA-256", encoder.encode(pass));
+    const hashHex = Array.from(new Uint8Array(hashBuffer))
+      .map(b => b.toString(16).padStart(2, "0")).join("");
+    if (user === "staff" && hashHex === "a7fc444f5b658e19d6a6094c360db22c25929cc016b4cc74b372ef411b5e5fc6") {
       document.getElementById("loginScreen").style.display = "none";
     } else {
       document.getElementById("loginError").style.display = "block";
@@ -438,22 +346,22 @@
     }
   }
 
-  // ════════════════════════════════
-  //  CONFIG API
-  // ════════════════════════════════
+  // ══════════════════════════════════════
+  //  CONFIG
+  // ══════════════════════════════════════
   const CONFIG = {
     API_LIVE: false,
     BUNGIE_API_KEY: "VOTRE_CLE_API_ICI",
     BASE_URL: "https://www.bungie.net/Platform",
+    HOURS_BACK: 48,
   };
 
-  // ════════════════════════════════
-  //  VÉRIFICATION
-  // ════════════════════════════════
+  // ══════════════════════════════════════
+  //  VÉRIFICATION PRINCIPALE
+  // ══════════════════════════════════════
   async function verifyPlayer() {
     const pseudo   = document.getElementById("inputPseudo").value.trim();
     const expected = parseInt(document.getElementById("inputExpected").value);
-
     if (!pseudo)         return showError("Saisis un pseudo.");
     if (isNaN(expected)) return showError("Saisis une Inventory Value valide.");
 
@@ -470,79 +378,145 @@
     }
   }
 
-  // ════════════════════════════════
-  //  MODE RÉEL (dès que l'API est live)
-  // ════════════════════════════════
+  // ══════════════════════════════════════
+  //  MODE RÉEL — Scan de toutes les runs 48h
+  // ══════════════════════════════════════
   async function fetchRealData(pseudo, expected) {
     const headers = { "X-API-Key": CONFIG.BUNGIE_API_KEY };
 
-    const searchRes = await fetch(
-      `${CONFIG.BASE_URL}/Destiny2/SearchDestinyPlayer/-1/${encodeURIComponent(pseudo)}/`,
-      { headers }
-    );
+    // 1. Résoudre pseudo → membershipId
+    setStep("Recherche du joueur…");
+    const searchRes  = await fetch(`${CONFIG.BASE_URL}/Destiny2/SearchDestinyPlayer/-1/${encodeURIComponent(pseudo)}/`, { headers });
     const searchJson = await searchRes.json();
     if (!searchJson.Response?.length) throw new Error("Joueur introuvable.");
+    const { membershipId, membershipType } = searchJson.Response[0];
 
-    const { membershipId } = searchJson.Response[0];
-
-    const profileRes = await fetch(
-      `${CONFIG.BASE_URL}/Destiny2/Profile/${membershipId}/?components=100,201`,
-      { headers }
-    );
+    // 2. Récupérer les personnages
+    setStep("Récupération des personnages…");
+    const profileRes  = await fetch(`${CONFIG.BASE_URL}/Destiny2/Profile/${membershipId}/?components=200`, { headers });
     const profileJson = await profileRes.json();
-    const actualValue = computeInventoryValue(profileJson.Response);
+    const characterIds = Object.keys(profileJson.Response.characters.data);
+
+    // 3. Pour chaque personnage, récupérer l'historique des runs 48h
+    const since = new Date(Date.now() - CONFIG.HOURS_BACK * 60 * 60 * 1000);
+    let allRuns = [];
+
+    for (const charId of characterIds) {
+      setStep(`Scan des runs (perso ${charId.slice(-4)})…`);
+      const actRes  = await fetch(
+        `${CONFIG.BASE_URL}/Destiny2/${membershipType}/Account/${membershipId}/Character/${charId}/Stats/Activities/?count=250&page=0`,
+        { headers }
+      );
+      const actJson = await actRes.json();
+      const activities = actJson.Response?.activities || [];
+
+      for (const act of activities) {
+        const actDate = new Date(act.period);
+        if (actDate < since) continue; // Ignorer les runs hors fenêtre 48h
+
+        // 4. Récupérer le PGCR (Post Game Carnage Report) pour l'Inventory Value
+        // TODO: adapter le parsing au format JSON Marathon une fois la doc disponible
+        const pgcrRes  = await fetch(`${CONFIG.BASE_URL}/Destiny2/Stats/PostGameCarnageReport/${act.activityDetails.instanceId}/`, { headers });
+        const pgcrJson = await pgcrRes.json();
+        const inventoryValue = getInventoryValueFromPGCR(pgcrJson.Response, membershipId);
+
+        allRuns.push({
+          date: actDate,
+          value: inventoryValue,
+          instanceId: act.activityDetails.instanceId,
+        });
+      }
+    }
+
+    const matchRun = allRuns.find(r => r.value === expected);
 
     return {
       pseudo, membershipId,
-      actualValue,
       expectedValue: expected,
-      match: Math.abs(actualValue - expected) <= 500,
+      runs: allRuns,
+      matchRun,
+      found: !!matchRun,
       lastUpdate: new Date().toLocaleString("fr-FR"),
     };
   }
 
-  function computeInventoryValue(profileData) {
-    return 0; // TODO : à compléter avec la structure JSON Marathon
+  // TODO: à compléter avec la structure PGCR de Marathon dès que la doc est disponible
+  function getInventoryValueFromPGCR(pgcrData, membershipId) {
+    // Exemple Destiny 2 : pgcrData.entries[].extended.values.inventoryValue.basic.value
+    // À adapter selon la structure Marathon
+    return 0;
   }
 
-  // ════════════════════════════════
+  // ══════════════════════════════════════
   //  MODE SIMULATION
-  // ════════════════════════════════
+  // ══════════════════════════════════════
   async function simulateData(pseudo, expected) {
-    await new Promise(r => setTimeout(r, 1400));
-    const variance = Math.floor((Math.random() - 0.5) * 8000);
+    setStep("Recherche du joueur…");
+    await sleep(600);
+    setStep("Récupération des personnages…");
+    await sleep(500);
+
+    // Générer entre 3 et 8 runs aléatoires sur 48h
+    const nbRuns = Math.floor(Math.random() * 6) + 3;
+    const runs = [];
+    const now = Date.now();
+
+    for (let i = 0; i < nbRuns; i++) {
+      setStep(`Analyse des runs… (${i + 1}/${nbRuns})`);
+      await sleep(200);
+      const hoursAgo = Math.random() * 48;
+      const date = new Date(now - hoursAgo * 3600000);
+      // Une run sur nbRuns correspond exactement à la valeur déclarée
+      const value = i === Math.floor(nbRuns / 2)
+        ? expected
+        : expected + Math.floor((Math.random() - 0.5) * 30000);
+      runs.push({ date, value, instanceId: "SIM-" + Math.random().toString(36).substr(2,6).toUpperCase() });
+    }
+
+    // Trier par date décroissante
+    runs.sort((a, b) => b.date - a.date);
+
+    const matchRun = runs.find(r => r.value === expected);
+
     return {
       pseudo,
       membershipId: "SIM-" + Math.random().toString(36).substr(2,8).toUpperCase(),
-      actualValue: expected + variance,
       expectedValue: expected,
-      match: Math.abs(variance) <= 500,
+      runs,
+      matchRun,
+      found: !!matchRun,
       simulated: true,
       lastUpdate: new Date().toLocaleString("fr-FR"),
     };
   }
 
-  // ════════════════════════════════
+  // ══════════════════════════════════════
   //  AFFICHAGE
-  // ════════════════════════════════
+  // ══════════════════════════════════════
   function displayResult(data) {
-    const box  = document.getElementById("resultBox");
-    const grid = document.getElementById("statsGrid");
-    const diff = data.actualValue - data.expectedValue;
-    const diffStr = (diff >= 0 ? "+" : "") + diff.toLocaleString("fr-FR") + " cr";
+    const box      = document.getElementById("resultBox");
+    const grid     = document.getElementById("statsGrid");
+    const runsList = document.getElementById("runsList");
 
-    box.className = "result show " + (data.match ? "success" : "failure");
-    document.getElementById("resultIcon").textContent  = data.match ? "✅" : "❌";
-    document.getElementById("resultTitle").textContent = data.match
-      ? "Inventory Value vérifiée ✔"
-      : "Valeur non conforme ✗";
+    box.className = "result show " + (data.found ? "success" : "failure");
+    document.getElementById("resultIcon").textContent  = data.found ? "✅" : "❌";
+    document.getElementById("resultTitle").textContent = data.found
+      ? "Inventory Value confirmée ✔"
+      : "Valeur introuvable dans les 48h ✗";
+
     document.getElementById("resultDetail").innerHTML = `
       Joueur : <span>${data.pseudo}</span><br>
-      ID : <span>${data.membershipId}</span><br>
-      ${data.simulated ? "<em style='color:var(--yellow)'>⚠ Données simulées — API non disponible</em><br>" : ""}
-      Écart : <span>${diffStr}</span> · Vérifié le <span>${data.lastUpdate}</span>
+      Valeur cherchée : <span>${data.expectedValue.toLocaleString("fr-FR")} cr</span><br>
+      Runs analysées : <span>${data.runs.length} run(s) sur 48h</span><br>
+      ${data.found
+        ? `Run correspondante : <span>${data.matchRun.date.toLocaleString("fr-FR")}</span>`
+        : `<em style="color:var(--red)">Aucune run ne correspond à cette valeur exacte.</em>`
+      }<br>
+      ${data.simulated ? "<em style='color:var(--yellow)'>⚠ Données simulées — API non disponible</em>" : ""}
+      <br><span style="font-size:0.75rem;color:var(--muted)">Vérifié le ${data.lastUpdate}</span>
     `;
 
+    // Stats
     grid.style.display = "grid";
     grid.innerHTML = `
       <div class="stat-box">
@@ -550,12 +524,32 @@
         <div class="stat-label">Valeur déclarée</div>
       </div>
       <div class="stat-box">
-        <div class="stat-val" style="color:${data.match ? 'var(--green)' : 'var(--red)'}">
-          ${data.actualValue.toLocaleString("fr-FR")}
+        <div class="stat-val" style="color:${data.found ? 'var(--green)' : 'var(--red)'}">
+          ${data.runs.length}
         </div>
-        <div class="stat-label">Valeur réelle</div>
+        <div class="stat-label">Runs analysées</div>
       </div>
     `;
+
+    // Liste des runs
+    // Supprimer les anciens items sauf le titre
+    const title = runsList.querySelector(".runs-list-title");
+    runsList.innerHTML = "";
+    runsList.appendChild(title);
+
+    data.runs.forEach(run => {
+      const isMatch = run.value === data.expectedValue;
+      const div = document.createElement("div");
+      div.className = "run-item" + (isMatch ? " match" : "");
+      div.innerHTML = `
+        <span class="run-date">${run.date.toLocaleString("fr-FR")}</span>
+        <span class="run-val">${run.value.toLocaleString("fr-FR")} cr</span>
+        ${isMatch ? '<span class="run-badge">✔ Match</span>' : ""}
+      `;
+      runsList.appendChild(div);
+    });
+
+    runsList.className = "runs-list show";
   }
 
   function showError(msg) {
@@ -565,14 +559,26 @@
     document.getElementById("resultTitle").textContent = "Erreur";
     document.getElementById("resultDetail").innerHTML  = msg;
     document.getElementById("statsGrid").style.display = "none";
+    document.getElementById("runsList").className = "runs-list";
   }
 
   function setLoading(state) {
     document.getElementById("loader").className = state ? "loader active" : "loader";
     document.getElementById("btnVerify").disabled = state;
-    if (state) document.getElementById("resultBox").className = "result";
+    if (state) {
+      document.getElementById("resultBox").className = "result";
+      document.getElementById("runsList").className = "runs-list";
+      document.getElementById("loaderStep").textContent = "";
+    }
   }
 
+  function setStep(msg) {
+    document.getElementById("loaderStep").textContent = msg;
+  }
+
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  // Badge API
   if (CONFIG.API_LIVE) {
     document.getElementById("apiStatusBadge").classList.add("live");
     document.getElementById("apiStatusText").textContent = "API Bungie Marathon connectée";
